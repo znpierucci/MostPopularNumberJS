@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+
+    function buildMapOfNumbersToCounts(inputString) {
+    	// HINT: these links should help
+    	// https://sunfishempire.wordpress.com/2014/08/19/5-ways-to-use-a-javascript-hashmap/
+    	// https://www.w3schools.com/js/js_string_methods.asp
+    	
+    	var map = {};
+        var number = null;
+        var currentCount = 0;
+    	var length = inputString.length;
+        
+    	for(var i = 0; i < length; i++) {
+            number = inputString.charAt(i);
+            console.log(number);
+            if(number in map){
+                currentCount = map[number].occurrences;
+                map[number] = {occurrences: currentCount + 1 };
+                currentCount = 0;
+            } else {
+                map[number] = {occurrences: 1 };
+            }
+        }
+        
+		return map;
+    }
+
+    function findMostPopularNumber(map) {
+    	// HINT: this links should help
+    	// https://sunfishempire.wordpress.com/2014/08/19/5-ways-to-use-a-javascript-hashmap/
+        var keyWithMost = null;
+        var highestValue = 0;
+        var currentCount;
+        
+        for(var key in map) {
+            currentCount = map[key].occurrences;
+            if(currentCount > highestValue){
+                highestValue = currentCount;
+                keyWithMost = key;
+            }
+            currentCount = 0;
+        }
+		
+		
+        // return the most popular number
+        return(keyWithMost);
+    }
+
+    function countStringOcurrences() {
+    	var inputString = document.getElementById("myTextArea").value;
+    	  
+        var map = buildMapOfNumbersToCounts(inputString);
+        var mostPopularNumber = findMostPopularNumber(map);
+        var numOfOccurrences = map[mostPopularNumber].occurrences;
+        
+     	// display the results
+    	var resultMessage = 'The number "';
+    	resultMessage = resultMessage.concat(mostPopularNumber);
+    	resultMessage = resultMessage.concat('" was found ');
+    	resultMessage = resultMessage.concat(numOfOccurrences);
+    	resultMessage = resultMessage.concat(' times ');
+        alert(resultMessage);
+    }
+</script>
+
+<h2>Enter numbers without any spaces</h2>
+<textarea id="myTextArea" rows="4" cols="50">
+</textarea>
+<br>
+<button type="button" onclick="countStringOcurrences()">Search</button>
+ 
+</body>
+</html>
